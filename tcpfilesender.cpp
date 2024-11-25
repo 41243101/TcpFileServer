@@ -7,8 +7,26 @@ TcpFileSender::TcpFileSender(QWidget *parent)
     totalBytes = 0;
     bytesWritten = 0;
     bytesToWrite = 0;
+
     clientProgressBar = new QProgressBar;
     clientStatusLabel = new QLabel(QStringLiteral("客戶端就緒"));
+
+    // 新增 IP 和 PORT 輸入框
+    ipLabel = new QLabel(QStringLiteral("IP 地址:"));
+    ipLineEdit = new QLineEdit("127.0.0.1"); // 默認值
+    portLabel = new QLabel(QStringLiteral("PORT:"));
+    portLineEdit = new QLineEdit("16998");   // 默認值
+
+    // IP 水平布局
+    QHBoxLayout *ipLayout = new QHBoxLayout;
+    ipLayout->addWidget(ipLabel);
+    ipLayout->addWidget(ipLineEdit);
+
+    // PORT 水平布局
+    QHBoxLayout *portLayout = new QHBoxLayout;
+    portLayout->addWidget(portLabel);
+    portLayout->addWidget(portLineEdit);
+
     startButton = new QPushButton(QStringLiteral("開始"));
     quitButton = new QPushButton(QStringLiteral("退出"));
     openButton = new QPushButton(QStringLiteral("開檔"));
@@ -21,6 +39,8 @@ TcpFileSender::TcpFileSender(QWidget *parent)
     QVBoxLayout *mainLayout = new QVBoxLayout;
     mainLayout->addWidget(clientProgressBar);
     mainLayout->addWidget(clientStatusLabel);
+    mainLayout->addLayout(ipLayout);       // 添加 IP 水平布局
+    mainLayout->addLayout(portLayout);     // 添加 PORT 水平布局
     mainLayout->addStretch(1);
     mainLayout->addSpacing(10);
     mainLayout->addWidget(buttonBox);
@@ -43,7 +63,11 @@ void TcpFileSender::start()
     startButton->setEnabled(false);
     bytesWritten = 0;
     clientStatusLabel->setText(QStringLiteral("連接中..."));
-    tcpClient.connectToHost(QHostAddress("127.0.0.1"), 16998);
+    // 從輸入框中獲取 IP 和 PORT
+    QString ipAddress = ipLineEdit->text();
+    quint16 port = portLineEdit->text().toUShort();
+    tcpClient.connectToHost(QHostAddress(ipAddress), port);
+    //tcpClient.connectToHost(QHostAddress("127.0.0.1"), 16998);
 }
 void TcpFileSender::startTransfer()
 {
@@ -93,6 +117,22 @@ TcpFileSender::~TcpFileSender()
 {
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

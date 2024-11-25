@@ -8,6 +8,23 @@ TcpFileServer::TcpFileServer(QWidget *parent)
     fileNameSize = 0;
     serverProgressBar = new QProgressBar;
     serverStatusLabel = new QLabel(QStringLiteral("伺服器端就緒"));
+
+    // 新增 IP 和 PORT 輸入框
+    ipLabel = new QLabel(QStringLiteral("IP 地址:"));
+    ipLineEdit = new QLineEdit("127.0.0.1"); // 默認值
+    portLabel = new QLabel(QStringLiteral("PORT:"));
+    portLineEdit = new QLineEdit("16998");   // 默認值
+
+    // IP 水平布局
+    QHBoxLayout *ipLayout = new QHBoxLayout;
+    ipLayout->addWidget(ipLabel);
+    ipLayout->addWidget(ipLineEdit);
+
+    // PORT 水平布局
+    QHBoxLayout *portLayout = new QHBoxLayout;
+    portLayout->addWidget(portLabel);
+    portLayout->addWidget(portLineEdit);
+
     startButton = new QPushButton(QStringLiteral("接收"));
     quitButton = new QPushButton(QStringLiteral("退出"));
     buttonBox = new QDialogButtonBox;
@@ -17,6 +34,8 @@ TcpFileServer::TcpFileServer(QWidget *parent)
     QVBoxLayout *mainLayout = new QVBoxLayout;
     mainLayout->addWidget(serverProgressBar);
     mainLayout->addWidget(serverStatusLabel);
+    mainLayout->addLayout(ipLayout);       // 添加 IP 水平布局
+    mainLayout->addLayout(portLayout);     // 添加 PORT 水平布局
     mainLayout->addStretch();
     mainLayout->addWidget(buttonBox);
     setLayout(mainLayout);
@@ -117,9 +136,6 @@ void TcpFileServer::updateServerProgress()
           localFile->close();
           start();
       }
-
-
-
 }
 
 void TcpFileServer::displayError(QAbstractSocket::SocketError socketError)
@@ -139,9 +155,3 @@ void TcpFileServer::displayError(QAbstractSocket::SocketError socketError)
     startButton->setEnabled(true);
 
 }
-
-
-
-
-
-

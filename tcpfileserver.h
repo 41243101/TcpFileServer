@@ -18,6 +18,11 @@ public slots:
     void updateServerProgress();
     void displayError(QAbstractSocket::SocketError socketError);
 private:
+
+    QLabel *ipLabel;             // 新增 IP 標籤
+    QLabel *portLabel;           // 新增 PORT 標籤
+    QLineEdit *ipLineEdit;       // 新增 IP 輸入框
+    QLineEdit *portLineEdit;     // 新增 PORT 輸入框
     QProgressBar     *serverProgressBar;
     QLabel           *serverStatusLabel;
     QPushButton      *startButton;

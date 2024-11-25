@@ -13,8 +13,10 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
+        tabwidge.cpp \
         tcpfilesender.cpp \
         tcpfileserver.cpp
 
 HEADERS  += tcpfileserver.h \
+    tabwidge.h \
     tcpfilesender.h
